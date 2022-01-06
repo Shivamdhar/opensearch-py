@@ -63,7 +63,7 @@ jobs:
           python setup.py test
       - name: Generate coverage report
         run: |
-          coverage run -m pytest . && coverage xml
+          coverage run setup.py test && coverage xml
       - name: Upload Coverage Report
         uses: codecov/codecov-action@v2
         with:
