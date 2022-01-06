@@ -2,7 +2,7 @@
 [![Release](https://github.com/opensearch-project/opensearch-py/actions/workflows/unified-release.yml/badge.svg)](https://github.com/opensearch-project/opensearch-py/actions/workflows/unified-release.yml)
 [![CI](https://github.com/opensearch-project/opensearch-py/actions/workflows/ci.yml/badge.svg)](https://github.com/opensearch-project/opensearch-py/actions/workflows/ci.yml)
 [![Integration](https://github.com/opensearch-project/opensearch-py/actions/workflows/integration.yml/badge.svg)](https://github.com/opensearch-project/opensearch-py/actions/workflows/integration.yml)
-[![codecov](https://codecov.io/gh/Shivamdhar/opensearch-py/branch/opensearch-py-105/graph/badge.svg?token=PYQO2GW39S)](https://codecov.io/gh/Shivamdhar/opensearch-py)
+[![codecov](https://codecov.io/gh/Shivamdhar/opensearch-py/branch/opensearch-py-105/graph/badge.svg?token=817ILHMH6Q)](https://codecov.io/gh/Shivamdhar/opensearch-py)
 [![Chat](https://img.shields.io/badge/chat-on%20forums-blue)](https://discuss.opendistrocommunity.dev/c/clients/)
 ![PRs welcome!](https://img.shields.io/badge/PRs-welcome!-success)
 

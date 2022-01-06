@@ -1,9 +1,11 @@
 [run]
+source=opensearchpy
 omit =
     */python?.?/*
     */lib-python/?.?/*.py
     */lib_pypy/*
     */site-packages/*
     *.egg/*
-    test_opensearch/*
+    test_opensearchpy/*
+    opensearchpy/helpers/test.py
     opensearch/connection/esthrift/*

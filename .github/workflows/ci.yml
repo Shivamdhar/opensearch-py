@@ -60,11 +60,11 @@ jobs:
           python -m pip install -r dev-requirements.txt
       - name: Run Tests
         run: |
-          python setup.py test
+          coverage run setup.py test && coverage xml
       - name: Upload Coverage Report
         uses: codecov/codecov-action@v2
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+          token: 1aaee041-dc69-4e9c-9b09-cf3d377dbe26
 
   twine-check:
     runs-on: ubuntu-latest
