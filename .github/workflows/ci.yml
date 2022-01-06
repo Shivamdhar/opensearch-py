@@ -61,6 +61,10 @@ jobs:
       - name: Run Tests
         run: |
           python setup.py test
+      - name: Upload Coverage Report
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   twine-check:
     runs-on: ubuntu-latest
