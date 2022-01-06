@@ -84,7 +84,7 @@ jobs:
           python -m pip install -r dev-requirements.txt
       - name: Generate coverage report
         run: |
-          coverage run -m setup test && coverage xml
+          coverage run -m setup test && coverage combine && coverage report -m && coverage xml
       - name: Upload Coverage Report
         uses: codecov/codecov-action@v2
         with:

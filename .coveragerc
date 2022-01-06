@@ -1,5 +1,5 @@
 [run]
-source=opensearchpy
+include = opensearchpy/*
 omit =
     */python?.?/*
     */lib-python/?.?/*.py
@@ -8,4 +8,3 @@ omit =
     *.egg/*
     test_opensearchpy/*
     opensearchpy/helpers/test.py
-    opensearch/connection/esthrift/*
