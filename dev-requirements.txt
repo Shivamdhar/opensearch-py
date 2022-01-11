@@ -1,7 +1,6 @@
 requests>=2, <3
 pytest
 pytest-cov
-coverage==4.4.2
 mock
 sphinx<1.7
 sphinx_rtd_theme
@@ -11,6 +10,7 @@ jinja2
 numpy; python_version<"3.10"
 pandas; python_version<"3.10"
 
+coverage==4.0.2;
 pyyaml>=5.4; python_version>="3.6"
 pyyaml==5.3.1; python_version<"3.6"
 
