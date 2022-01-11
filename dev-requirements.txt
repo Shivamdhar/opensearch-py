@@ -1,7 +1,7 @@
 requests>=2, <3
 pytest
 pytest-cov
-coverage
+coverage==4.4.2
 mock
 sphinx<1.7
 sphinx_rtd_theme
