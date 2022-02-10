@@ -79,7 +79,7 @@ class RequestsHttpConnection(Connection):
         headers=None,
         http_compress=None,
         opaque_id=None,
-        **kwargs
+        **kwargs,
     ):
         if not REQUESTS_AVAILABLE:
             raise ImproperlyConfigured(
@@ -98,7 +98,7 @@ class RequestsHttpConnection(Connection):
             headers=headers,
             http_compress=http_compress,
             opaque_id=opaque_id,
-            **kwargs
+            **kwargs,
         )
 
         if not self.http_compress:

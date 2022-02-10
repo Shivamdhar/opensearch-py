@@ -46,5 +46,5 @@ class RequestsHttpConnection(Connection):
         headers: Optional[Mapping[str, str]] = ...,
         http_compress: Optional[bool] = ...,
         opaque_id: Optional[str] = ...,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> None: ...

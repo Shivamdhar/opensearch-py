@@ -34,7 +34,7 @@ except ImportError:
 from ...exceptions import ImproperlyConfigured
 
 # AWS OpenSearch service name
-AMAZON_OPENSEARCH_SERVICE = "aos"
+OPENSEARCH_SERVICE = "es"
 
 
 class Signer:
@@ -69,6 +69,4 @@ class AwsSignerV4(Signer):
         if not BOTOCORE_AVAILABLE:
             raise ImproperlyConfigured("Please install botocore to use AwsSigner.")
 
-        return SigV4Auth(
-            self.session_credentials, AMAZON_OPENSEARCH_SERVICE, self.region
-        )
+        return SigV4Auth(self.session_credentials, OPENSEARCH_SERVICE, self.region)

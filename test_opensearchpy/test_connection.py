@@ -49,6 +49,7 @@ from opensearchpy.connection import (
     RequestsHttpConnection,
     Urllib3HttpConnection,
 )
+from opensearchpy.connection.utils.signer import AwsSignerV4
 from opensearchpy.exceptions import (
     ConflictError,
     ConnectionError,
@@ -351,7 +352,7 @@ class TestUrllib3Connection(TestCase):
         buf = b"\xe4\xbd\xa0\xe5\xa5\xbd\xed\xa9\xaa"
         con = self._get_mock_connection(response_body=buf)
         status, headers, data = con.perform_request("GET", "/")
-        self.assertEqual(u"你好\uda6a", data)
+        self.assertEqual("你好\uda6a", data)
 
     @pytest.mark.skipif(
         not reraise_exceptions, reason="RecursionError isn't defined in Python <3.5"
@@ -404,6 +405,14 @@ class TestRequestsConnection(TestCase):
 
     def test_custom_http_auth_is_allowed(self):
         auth = AuthBase()
+        c = RequestsHttpConnection(http_auth=auth)
+
+        self.assertEqual(auth, c.session.auth)
+
+    def test_aws_signer_http_auth_is_allowed(self):
+        region = "us-west-1"
+        session_credentials = "mock_session_credentials"
+        auth = AwsSignerV4(region, session_credentials).sign_request()
         c = RequestsHttpConnection(http_auth=auth)
 
         self.assertEqual(auth, c.session.auth)
@@ -696,7 +705,7 @@ class TestRequestsConnection(TestCase):
         buf = b"\xe4\xbd\xa0\xe5\xa5\xbd\xed\xa9\xaa"
         con = self._get_mock_connection(response_body=buf)
         status, headers, data = con.perform_request("GET", "/")
-        self.assertEqual(u"你好\uda6a", data)
+        self.assertEqual("你好\uda6a", data)
 
     @pytest.mark.skipif(
         not reraise_exceptions, reason="RecursionError isn't defined in Python <3.5"

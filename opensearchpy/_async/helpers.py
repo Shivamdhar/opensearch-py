@@ -70,7 +70,7 @@ async def _process_bulk_chunk(
     raise_on_error=True,
     ignore_status=(),
     *args,
-    **kwargs
+    **kwargs,
 ):
     """
     Send a bulk request to opensearch and process the output.
@@ -140,7 +140,7 @@ async def async_streaming_bulk(
     yield_ok=True,
     ignore_status=(),
     *args,
-    **kwargs
+    **kwargs,
 ):
 
     """
@@ -300,7 +300,7 @@ async def async_scan(
     request_timeout=None,
     clear_scroll=True,
     scroll_kwargs=None,
-    **kwargs
+    **kwargs,
 ):
     """
     Simple abstraction on top of the

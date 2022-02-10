@@ -60,5 +60,5 @@ class Urllib3HttpConnection(Connection):
         ssl_context: Optional[Any] = ...,
         http_compress: Optional[bool] = ...,
         opaque_id: Optional[str] = ...,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> None: ...

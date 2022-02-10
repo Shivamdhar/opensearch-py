@@ -85,7 +85,7 @@ class Transport(object):
         retry_on_status=(502, 503, 504),
         retry_on_timeout=False,
         send_get_body_as="GET",
-        **kwargs
+        **kwargs,
     ):
         """
         :arg hosts: list of dictionaries, each containing keyword arguments to

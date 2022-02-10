@@ -48,10 +48,7 @@ packages = [
     if package == module_dir or package.startswith(module_dir + ".")
 ]
 
-install_requires = [
-    "urllib3>=1.21.1, <2",
-    "certifi",
-]
+install_requires = ["urllib3>=1.21.1, <2", "certifi", "boto3", "botocore"]
 tests_require = [
     "requests>=2.0.0, <3.0.0",
     "coverage",
@@ -60,7 +57,7 @@ tests_require = [
     "pytest",
     "pytest-cov",
 ]
-async_require = ["aiohttp>=3,<4"]
+async_require = ["aiohttp>=3,<4", "boto3", "botocore"]
 
 docs_require = []
 generate_require = ["black", "jinja2"]

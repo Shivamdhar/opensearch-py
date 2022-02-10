@@ -191,7 +191,7 @@ class TestAIOHttpConnection:
             "user-agent": con._get_default_user_agent(),
         } == con.headers
 
-    def test_http_auth_using_AwsSignerV4(self):
+    def test_http_auth_using_aws_signer_v4(self):
         region = "us-west-1"
         session_credentials = "mock_session_credentials"
         con = AIOHttpConnection(
@@ -275,7 +275,7 @@ class TestAIOHttpConnection:
         buf = b"\xe4\xbd\xa0\xe5\xa5\xbd\xed\xa9\xaa"
         con = await self._get_mock_connection(response_body=buf)
         status, headers, data = await con.perform_request("GET", "/")
-        assert u"你好\uda6a" == data
+        assert "你好\uda6a" == data
 
     @pytest.mark.parametrize("exception_cls", reraise_exceptions)
     async def test_recursion_error_reraised(self, exception_cls):

@@ -80,7 +80,7 @@ class Connection(object):
         headers=None,
         http_compress=None,
         opaque_id=None,
-        **kwargs
+        **kwargs,
     ):
         if port is None:
             port = 9200

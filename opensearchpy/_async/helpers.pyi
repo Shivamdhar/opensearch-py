@@ -59,7 +59,7 @@ def _process_bulk_chunk(
     raise_on_error: bool = ...,
     ignore_status: Optional[Union[int, Collection[int]]] = ...,
     *args: Any,
-    **kwargs: Any
+    **kwargs: Any,
 ) -> AsyncGenerator[Tuple[bool, Any], None]: ...
 def aiter(x: Union[Iterable[T], AsyncIterable[T]]) -> AsyncGenerator[T, None]: ...
 def azip(
@@ -79,7 +79,7 @@ def async_streaming_bulk(
     yield_ok: bool = ...,
     ignore_status: Optional[Union[int, Collection[int]]] = ...,
     *args: Any,
-    **kwargs: Any
+    **kwargs: Any,
 ) -> AsyncGenerator[Tuple[bool, Any], None]: ...
 async def async_bulk(
     client: AsyncOpenSearch,
@@ -87,7 +87,7 @@ async def async_bulk(
     stats_only: bool = ...,
     ignore_status: Optional[Union[int, Collection[int]]] = ...,
     *args: Any,
-    **kwargs: Any
+    **kwargs: Any,
 ) -> Tuple[int, Union[int, List[Any]]]: ...
 def async_scan(
     client: AsyncOpenSearch,
@@ -99,7 +99,7 @@ def async_scan(
     request_timeout: Optional[Union[float, int]] = ...,
     clear_scroll: bool = ...,
     scroll_kwargs: Optional[Mapping[str, Any]] = ...,
-    **kwargs: Any
+    **kwargs: Any,
 ) -> AsyncGenerator[int, None]: ...
 async def async_reindex(
     client: AsyncOpenSearch,
