@@ -38,7 +38,6 @@ from platform import python_version
 import pytest
 import six
 import urllib3
-
 from botocore.auth import SigV4Auth
 from mock import Mock, patch
 from requests.auth import AuthBase
