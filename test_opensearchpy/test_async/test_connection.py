@@ -39,6 +39,7 @@ from multidict import CIMultiDict
 
 from opensearchpy import AIOHttpConnection, __versionstr__
 from opensearchpy.compat import reraise_exceptions
+from opensearchpy.connection.utils.signer import AwsSignerV4
 from opensearchpy.exceptions import ConnectionError
 
 pytestmark = pytest.mark.asyncio
@@ -189,6 +190,18 @@ class TestAIOHttpConnection:
             "connection": "keep-alive",
             "user-agent": con._get_default_user_agent(),
         } == con.headers
+
+    def test_http_auth_using_AwsSignerV4(self):
+        region = "us-west-1"
+        session_credentials = "mock_session_credentials"
+        con = AIOHttpConnection(http_auth=AwsSignerV4(region, session_credentials).sign_request())
+        assert con.http_auth
+        assert {
+                   "authorization": "Basic dXNlcm5hbWU6c2VjcmV0",
+                   "content-type": "application/json",
+                   "connection": "keep-alive",
+                   "user-agent": con._get_default_user_agent(),
+               } == con.headers
 
     def test_uses_https_if_verify_certs_is_off(self):
         with warnings.catch_warnings(record=True) as w:
