@@ -14,6 +14,8 @@ pandas; python_version<"3.10"
 pyyaml>=5.4; python_version>="3.6"
 pyyaml==5.3.1; python_version<"3.6"
 
+botocore; python_version>="3.6"
+
 isort
 black; python_version>="3.6"
 twine

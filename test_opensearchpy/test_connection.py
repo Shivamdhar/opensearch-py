@@ -38,6 +38,8 @@ from platform import python_version
 import pytest
 import six
 import urllib3
+
+from botocore.auth import SigV4Auth
 from mock import Mock, patch
 from requests.auth import AuthBase
 from urllib3._collections import HTTPHeaderDict
@@ -404,6 +406,14 @@ class TestRequestsConnection(TestCase):
 
     def test_custom_http_auth_is_allowed(self):
         auth = AuthBase()
+        c = RequestsHttpConnection(http_auth=auth)
+
+        self.assertEqual(auth, c.session.auth)
+
+    def test_aws_signer_http_auth_is_allowed(self):
+        region = "us-west-1"
+        session_credentials = "mock_session_credentials"
+        auth = SigV4Auth(session_credentials, "es", region)
         c = RequestsHttpConnection(http_auth=auth)
 
         self.assertEqual(auth, c.session.auth)
