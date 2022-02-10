@@ -24,21 +24,9 @@
 #  specific language governing permissions and limitations
 #  under the License.
 
-class Signer:
-    """
-    A generic signer class that can be extended by cloud providers
-    to provide the desired way of authentication.
-    """
-
-    def __init__(self):
-        pass
-
-    def sign_request(self):
-        pass
-
-
 try:
     from botocore.auth import SigV4Auth
+
     BOTOCORE_AVAILABLE = True
 except ImportError:
     BOTOCORE_AVAILABLE = False
@@ -48,23 +36,39 @@ from ...exceptions import ImproperlyConfigured
 # AWS OpenSearch service name
 AMAZON_OPENSEARCH_SERVICE = "aos"
 
+
+class Signer:
+    """
+    A generic signer class that can be extended by cloud providers
+    to provide the desired way of authentication.
+    """
+
+    def __init__(self) -> None:
+        pass
+
+    def sign_request(self) -> None:
+        pass
+
+
 class AwsSignerV4(Signer):
     """
     AwsSignerV4 extends from base class Signer and makes use of
     AWS region and boto session credentials to return the signer.
     """
-    def __init__(self,
-                 region,
-                 session_credentials):
+
+    def __init__(self, region, session_credentials) -> None:
         self.region = region
         self.session_credentials = session_credentials
 
-    def sign_request(self):
+    def sign_request(self) -> SigV4Auth:
+        """
+        The method checks for botocore availability and returns
+        a signer object.
+        :return: SigV4Auth object used as AWS signing mechanism
+        """
         if not BOTOCORE_AVAILABLE:
-            raise ImproperlyConfigured(
-                "Please install botocore to use AwsSigner."
-            )
+            raise ImproperlyConfigured("Please install botocore to use AwsSigner.")
 
-        return SigV4Auth(self.session_credentials,
-                         AMAZON_OPENSEARCH_SERVICE,
-                         self.region)
+        return SigV4Auth(
+            self.session_credentials, AMAZON_OPENSEARCH_SERVICE, self.region
+        )
