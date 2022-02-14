@@ -24,17 +24,22 @@
 #  specific language governing permissions and limitations
 #  under the License.
 
-try:
-    from botocore.auth import SigV4Auth
-
-    BOTOCORE_AVAILABLE = True
-except ImportError:
-    BOTOCORE_AVAILABLE = False
+import sys
 
 from ...exceptions import ImproperlyConfigured
 
 # AWS OpenSearch service name
 OPENSEARCH_SERVICE = "es"
+
+
+def python_version_gte_36():  # type: ignore
+    """
+    :return: boolean to show if python version running is greater than equal to 3.6 or not
+    """
+    if sys.hexversion >= 0x03060000:
+        return True
+    else:
+        return False
 
 
 class Signer:
@@ -43,10 +48,10 @@ class Signer:
     to provide the desired way of authentication.
     """
 
-    def __init__(self) -> None:
+    def __init__(self):  # type: ignore
         pass
 
-    def sign_request(self) -> None:
+    def sign_request(self):  # type: ignore
         pass
 
 
@@ -56,17 +61,24 @@ class AwsSignerV4(Signer):
     AWS region and boto session credentials to return the signer.
     """
 
-    def __init__(self, region, session_credentials) -> None:
+    def __init__(self, region, session_credentials):  # type: ignore
         self.region = region
         self.session_credentials = session_credentials
 
-    def sign_request(self) -> SigV4Auth:
+    def sign_request(self):  # type: ignore
         """
-        The method checks for botocore availability and returns
-        a signer object.
         :return: SigV4Auth object used as AWS signing mechanism
         """
-        if not BOTOCORE_AVAILABLE:
-            raise ImproperlyConfigured("Please install botocore to use AwsSigner.")
+        if python_version_gte_36():  # type: ignore
+            try:
+                from botocore.auth import SigV4Auth  # type: ignore
 
-        return SigV4Auth(self.session_credentials, OPENSEARCH_SERVICE, self.region)
+                return SigV4Auth(
+                    self.session_credentials, OPENSEARCH_SERVICE, self.region
+                )
+            except ImportError:
+                raise ImproperlyConfigured("Please install botocore to use AwsSigner.")
+        else:
+            raise ImproperlyConfigured(
+                "Please upgrade the python version to 3.6 or above to use AWS Signer."
+            )
