@@ -61,7 +61,7 @@ from .exceptions import (
     SSLError,
     TransportError,
 )
-from .helpers import AWSV4Signer
+from .helpers import AWSV4SignerAuth
 from .serializer import JSONSerializer
 from .transport import Transport
 
@@ -93,7 +93,7 @@ __all__ = [
     "AuthorizationException",
     "OpenSearchWarning",
     "OpenSearchDeprecationWarning",
-    "AWSV4Signer",
+    "AWSV4SignerAuth",
 ]
 
 try:

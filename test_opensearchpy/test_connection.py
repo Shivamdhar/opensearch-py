@@ -411,7 +411,7 @@ class TestRequestsConnection(TestCase):
         self.assertEqual(auth, c.session.auth)
 
     @pytest.mark.skipif(
-        sys.version_info < (3, 6), reason="AWSV4Signer requires python3.6+"
+        sys.version_info < (3, 6), reason="AWSV4SignerAuth requires python3.6+"
     )
     def test_aws_signer_as_http_auth(self):
         dummy_session = self.fetch_dummy_session()
@@ -419,14 +419,14 @@ class TestRequestsConnection(TestCase):
 
         import subprocess
 
-        from opensearchpy.helpers.signer import AWSV4Signer
+        from opensearchpy.helpers.signer import AWSV4SignerAuth
 
         subprocess.check_call([sys.executable, "-m", "pip", "install", "botocore"])
         subprocess.check_call([sys.executable, "-m", "pip", "install", "requests"])
 
         import requests
 
-        auth = AWSV4Signer(dummy_session, region)
+        auth = AWSV4SignerAuth(dummy_session, region)
         con = RequestsHttpConnection(http_auth=auth)
         prepared_request = requests.Request("GET", "http://localhost").prepare()
         auth.inject_headers(prepared_request)
@@ -445,14 +445,14 @@ class TestRequestsConnection(TestCase):
     def test_aws_signer_when_region_is_null(self):
         dummy_session = self.fetch_dummy_session()
 
-        from opensearchpy.helpers.signer import AWSV4Signer
+        from opensearchpy.helpers.signer import AWSV4SignerAuth
 
         with pytest.raises(ValueError) as e:
-            AWSV4Signer(dummy_session, None)
+            AWSV4SignerAuth(dummy_session, None)
         assert str(e.value) == "AWS region can not be null"
 
         with pytest.raises(ValueError) as e:
-            AWSV4Signer(dummy_session, "")
+            AWSV4SignerAuth(dummy_session, "")
         assert str(e.value) == "AWS region can not be null"
 
     def fetch_dummy_session(self):

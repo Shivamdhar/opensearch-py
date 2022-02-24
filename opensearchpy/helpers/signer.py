@@ -36,7 +36,7 @@ if PY3:
     from urllib.parse import parse_qs, urlencode, urlparse
 
 
-class AWSV4Signer(requests.auth.AuthBase):
+class AWSV4SignerAuth(requests.auth.AuthBase):
     """
     AWS V4 Request Signer for Requests.
     """

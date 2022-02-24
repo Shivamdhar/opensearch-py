@@ -37,7 +37,7 @@ from .actions import (
     streaming_bulk,
 )
 from .errors import BulkIndexError, ScanError
-from .signer import AWSV4Signer
+from .signer import AWSV4SignerAuth
 
 __all__ = [
     "BulkIndexError",
@@ -50,7 +50,7 @@ __all__ = [
     "reindex",
     "_chunk_actions",
     "_process_bulk_chunk",
-    "AWSV4Signer",
+    "AWSV4SignerAuth",
 ]
 
 
