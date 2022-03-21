@@ -221,6 +221,58 @@ For more information, see <a class="reference external" href="https://opensearch
 </pre></div>
 </div>
 </section>
+<section id="using-iam-credentials-for-authentication">
+<h2>Using IAM credentials for authentication<a class="headerlink" href="#using-iam-credentials-for-authentication" title="Permalink to this headline"></a></h2>
+<p>Refer the AWS documentation regarding usage of IAM credentials to sign requests to OpenSearch APIs - <a class="reference external" href="https://docs.aws.amazon.com/opensearch-service/latest/developerguide/request-signing.html#request-signing-python">Signing HTTP requests to Amazon OpenSearch Service.</a></p>
+<p>Opensearch-py client library also provides an in-house IAM based authentication feature, <code class="docutils literal notranslate"><span class="pre">AWSV4SignerAuth</span></code> that will help users to connect to their opensearch clusters by making use of IAM roles.</p>
+<section id="pre-requisites-to-use-awsv4signerauth">
+<h3>Pre-requisites to use <code class="docutils literal notranslate"><span class="pre">AWSV4SignerAuth</span></code><a class="headerlink" href="#pre-requisites-to-use-awsv4signerauth" title="Permalink to this headline"></a></h3>
+<ul>
+<li><p>Python version 3.6 or above,</p></li>
+<li><p>Install <a class="reference external" href="https://pypi.org/project/botocore/">botocore</a> using pip</p>
+<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">botocore</span></code></p>
+</li>
+</ul>
+<p>Here is the sample code that uses <code class="docutils literal notranslate"><span class="pre">AWSV4SignerAuth</span></code> -</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">opensearchpy</span> <span class="kn">import</span> <span class="n">OpenSearch</span><span class="p">,</span> <span class="n">RequestsHttpConnection</span><span class="p">,</span> <span class="n">AWSV4SignerAuth</span>
+<span class="kn">import</span> <span class="nn">boto3</span>
+
+<span class="n">host</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># cluster endpoint, for example: my-test-domain.us-east-1.es.amazonaws.com</span>
+<span class="n">region</span> <span class="o">=</span> <span class="s1">&#39;us-west-2&#39;</span>
+<span class="n">credentials</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span><span class="o">.</span><span class="n">get_credentials</span><span class="p">()</span>
+<span class="n">auth</span> <span class="o">=</span> <span class="n">AWSV4SignerAuth</span><span class="p">(</span><span class="n">credentials</span><span class="p">,</span> <span class="n">region</span><span class="p">)</span>
+<span class="n">index_name</span> <span class="o">=</span> <span class="s1">&#39;python-test-index3&#39;</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">OpenSearch</span><span class="p">(</span>
+    <span class="n">hosts</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;host&#39;</span><span class="p">:</span> <span class="n">host</span><span class="p">,</span> <span class="s1">&#39;port&#39;</span><span class="p">:</span> <span class="mi">443</span><span class="p">}],</span>
+    <span class="n">http_auth</span> <span class="o">=</span> <span class="n">auth</span><span class="p">,</span>
+    <span class="n">use_ssl</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">verify_certs</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">connection_class</span> <span class="o">=</span> <span class="n">RequestsHttpConnection</span>
+<span class="p">)</span>
+
+<span class="n">q</span> <span class="o">=</span> <span class="s1">&#39;miller&#39;</span>
+<span class="n">query</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+  <span class="s1">&#39;query&#39;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">&#39;multi_match&#39;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s1">&#39;query&#39;</span><span class="p">:</span> <span class="n">q</span><span class="p">,</span>
+      <span class="s1">&#39;fields&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;title^2&#39;</span><span class="p">,</span> <span class="s1">&#39;director&#39;</span><span class="p">]</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
+    <span class="n">body</span> <span class="o">=</span> <span class="n">query</span><span class="p">,</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">index_name</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Search results:&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
 <section id="project-resources">
 <h2>Project Resources<a class="headerlink" href="#project-resources" title="Permalink to this headline"></a></h2>
 <ul class="simple">
